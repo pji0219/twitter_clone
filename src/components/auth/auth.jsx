@@ -1,61 +1,93 @@
 import React, { useState } from 'react';
-import { authService } from '../../firebase';
+import { authService, firebaseInstance } from '../../firebase';
 
 function Auth() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [newAccount, setNewAccount] = useState(true);
+  const [error, setError] = useState();
 
-  const onEmailChange = (event) => {
-    setEmail(event.target.value);
+  // 이메일과 비빌번호 입력
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
   };
 
-  const onPasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
+  // 계정 생성 또는 로그인
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
-      let data;
       if (newAccount) {
         // 계정 만들기
-        data = await authService.createUserWithEmailAndPassword(
-          email,
-          password
-        );
+        await authService.createUserWithEmailAndPassword(email, password);
       } else {
         // 로그인
-        data = await authService.signInWithEmailAndPassword(email, password);
+        await authService.signInWithEmailAndPassword(email, password);
       }
-      console.log(data);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
+  };
+
+  // 눌렀을 때 이메일로 계정 생성 또는 이메일 로그인으로 전환
+  const onToggleAccount = () => setNewAccount((prev) => !prev);
+
+  // 구글 로그인 및 깃허브 로그인
+  const onSocialLogin = async (event) => {
+    const {
+      target: { name },
+    } = event;
+
+    let provider;
+
+    if (name === 'google') {
+      provider = new firebaseInstance.auth.GoogleAuthProvider();
+    } else if (name === 'github') {
+      provider = new firebaseInstance.auth.GithubAuthProvider();
+    }
+    const data = await authService.signInWithPopup(provider);
+    console.log(data);
   };
 
   return (
     <>
       <form onSubmit={onSubmit}>
         <input
-          onChange={onEmailChange}
+          name="email"
+          onChange={onChange}
           type="text"
           placeholder="이메일"
           required
           value={email}
         />
         <input
-          onChange={onPasswordChange}
+          name="password"
+          onChange={onChange}
           type="password"
           placeholder="비밀번호"
           required
           value={password}
         />
         <input type="submit" value={newAccount ? '계정 만들기' : '로그인'} />
+        {error}
       </form>
+      <span onClick={onToggleAccount}>
+        {newAccount ? '로그인' : '계정 만들기'}
+      </span>
       <div>
-        <button>구글 로그인</button>
-        <button>깃허브 로그인</button>
+        <button name="google" onClick={onSocialLogin}>
+          구글 로그인
+        </button>
+        <button name="github" onClick={onSocialLogin}>
+          깃허브 로그인
+        </button>
       </div>
     </>
   );

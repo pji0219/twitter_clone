@@ -4,6 +4,8 @@ import Home from './components/home/home';
 import Auth from './components/auth/auth';
 import Footer from './components/footer/footer';
 import { authService } from './firebase';
+import Nav from './components/nav/nav';
+import Profile from './components/profile/profile';
 
 function App() {
   // firebase 초기화 상태
@@ -27,11 +29,21 @@ function App() {
 
   return (
     <BrowserRouter>
+      {isLoggedIn && <Nav />}
       <Switch>
-        {isLoggedIn ? (
-          <Route path="/" exact component={Home} />
+        {init ? (
+          <>
+            {isLoggedIn ? (
+              <>
+                <Route path="/" exact component={Home} />
+                <Route path="/profile" component={Profile} />
+              </>
+            ) : (
+              <Route path="/" exact component={Auth} />
+            )}
+          </>
         ) : (
-          <Route path="/" exact component={Auth} />
+          <h1>initializing...</h1>
         )}
       </Switch>
       <Footer />
