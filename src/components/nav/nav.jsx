@@ -6,7 +6,7 @@ function Nav() {
     <nav>
       <ul>
         <li>
-          <Link to="/" exact>
+          <Link to="/" exact="true">
             홈
           </Link>
         </li>

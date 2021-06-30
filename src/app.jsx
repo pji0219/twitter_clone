@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from './components/home/home';
-import Auth from './components/auth/auth';
-import Footer from './components/footer/footer';
 import { authService } from './firebase';
-import Nav from './components/nav/nav';
-import Profile from './components/profile/profile';
+import Footer from './components/footer/footer';
+import Router from './components/router';
 
 function App() {
-  // firebase 초기화 상태
+  // firebase 초기화 state
   const [init, setInit] = useState(false);
-  // user 로그인 상태
+  // user 로그인 state
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // user를 기억하기 위한 state
+  const [userObj, setUserObj] = useState(null);
 
   useEffect(() => {
     // user 로그인 상태 변화 감지
     authService.onAuthStateChanged((user) => {
-      // 로그인 상태에 따른 분기 처리
+      // 로그인 상태에 따른 분기 처리 (user가 있으면 로그인 상태)
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -28,26 +27,14 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      {isLoggedIn && <Nav />}
-      <Switch>
-        {init ? (
-          <>
-            {isLoggedIn ? (
-              <>
-                <Route path="/" exact component={Home} />
-                <Route path="/profile" component={Profile} />
-              </>
-            ) : (
-              <Route path="/" exact component={Auth} />
-            )}
-          </>
-        ) : (
-          <h1>initializing...</h1>
-        )}
-      </Switch>
+    <>
+      {init ? (
+        <Router isLoggedIn={isLoggedIn} userObj={userObj} />
+      ) : (
+        <h1>initializing...</h1>
+      )}
       <Footer />
-    </BrowserRouter>
+    </>
   );
 }
 

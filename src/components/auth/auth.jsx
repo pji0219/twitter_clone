@@ -52,8 +52,7 @@ function Auth() {
     } else if (name === 'github') {
       provider = new firebaseInstance.auth.GithubAuthProvider();
     }
-    const data = await authService.signInWithPopup(provider);
-    console.log(data);
+    await authService.signInWithPopup(provider);
   };
 
   return (
@@ -65,7 +64,7 @@ function Auth() {
           type="text"
           placeholder="이메일"
           required
-          value={email}
+          value={email || ''}
         />
         <input
           name="password"
@@ -73,7 +72,7 @@ function Auth() {
           type="password"
           placeholder="비밀번호"
           required
-          value={password}
+          value={password || ''}
         />
         <input type="submit" value={newAccount ? '계정 만들기' : '로그인'} />
         {error}
