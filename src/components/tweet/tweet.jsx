@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { dbService } from '../../firebase';
+import { dbService, storageService } from '../../firebase';
 
 function Tweet({ tweetObj, isOwner }) {
   const [update, setUpdate] = useState(false);
@@ -11,7 +11,10 @@ function Tweet({ tweetObj, isOwner }) {
 
     // 확인창의 확인 버튼 누르면 삭제 (true 반영)
     if (delteConfirm) {
+      // 트윗 삭제
       await dbService.doc(`tweets/${tweetObj.id}`).delete();
+      // 트윗의 사진 삭제
+      await storageService.refFromURL(tweetObj.imgFileUrl).delete();
     }
   };
 
@@ -55,6 +58,14 @@ function Tweet({ tweetObj, isOwner }) {
       ) : (
         <>
           <h4>{tweetObj.text}</h4>
+          {tweetObj.imgFileUrl && (
+            <img
+              src={tweetObj.imgFileUrl}
+              width="50px"
+              height="50px"
+              alt="이미지"
+            />
+          )}
           {isOwner && (
             <>
               <button onClick={onDelete}>트윗 삭제</button>
