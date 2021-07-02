@@ -6,19 +6,6 @@ function Profile({ userObj, refreshUser }) {
   const [newProfileName, setNewProfileName] = useState(userObj.displayName);
   const history = useHistory();
 
-  // useEffect(() => {
-  //   const getMyTweets = async () => {
-  //     // 현재 로그인 된 user가 트윗한 트윗들만 필터링
-  //     const tweets = await dbService
-  //     .collection('tweets')
-  //     .where('creatorId', '==', userObj.uid)
-  //     .orderBy('createAt')
-  //     .get();
-  //     console.log(tweets.docs.map((doc) => doc.data()));
-  //   };
-  //   getMyTweets();
-  // }, []);
-
   // 로그아웃
   const onLogOut = () => {
     authService.signOut();
@@ -35,12 +22,12 @@ function Profile({ userObj, refreshUser }) {
     event.preventDefault();
 
     // 현재 프로필 이름과 수정 입력창에 입력한 프로필 이름이 다르면 업데이트 시킴
-    if(userObj.displayName !== newProfileName) {
+    if (userObj.displayName !== newProfileName) {
       await userObj.updateProfile({
-        displayName: newProfileName
-      })
+        displayName: newProfileName,
+      });
 
-      // 프로필 이름 변경 적용
+      // 프로필 이름 변경 nav에도 적용
       refreshUser();
     }
   };
