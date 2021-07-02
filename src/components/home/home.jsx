@@ -12,13 +12,16 @@ function Home({ userObj }) {
     // DB에 있는 트윗 조회
     const getTweets = async () => {
       // DB에 일어나는 작업들 실시간 감지 (데이터 CRUD) 하고 데이터 조회
-      dbService.collection('tweets').onSnapshot((snapshot) => {
-        const tweetArray = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setTweets(tweetArray);
-      });
+      dbService
+        .collection('tweets')
+        .orderBy('createdAt', 'desc')
+        .onSnapshot((snapshot) => {
+          const tweetArray = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setTweets(tweetArray);
+        });
     };
     getTweets();
   }, []);
