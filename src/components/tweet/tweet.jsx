@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { dbService, storageService } from '../../firebase';
+import styles from './tweet.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 
 function Tweet({ tweetObj, isOwner }) {
   const [update, setUpdate] = useState(false);
@@ -40,37 +43,39 @@ function Tweet({ tweetObj, isOwner }) {
   };
 
   return (
-    <div>
+    <div className={styles.tweet}>
       {update ? (
-        <>
-          <form onSubmit={onSubmit}>
-            <input
-              onChange={onChange}
-              type="text"
-              placeholder="트윗 내용을 수정하세요."
-              value={newTweet}
-              required
-            />
-            <button type="submit">수정</button>
-          </form>
-          <button onClick={toggleUpdate}>취소</button>
-        </>
+        <form onSubmit={onSubmit} className={styles.tweet_update}>
+          <input
+            onChange={onChange}
+            type="text"
+            placeholder="트윗 내용을 수정하세요."
+            value={newTweet}
+            required
+            className={styles.form_input}
+          />
+          <button type="submit" className={styles.form_btn}>
+            수정
+          </button>
+          <button onClick={toggleUpdate} className={styles.cancel_btn}>
+            취소
+          </button>
+        </form>
       ) : (
         <>
           <h4>{tweetObj.text}</h4>
           {tweetObj.imgFileUrl && (
-            <img
-              src={tweetObj.imgFileUrl}
-              width="50px"
-              height="50px"
-              alt="이미지"
-            />
+            <img src={tweetObj.imgFileUrl} alt="이미지" />
           )}
           {isOwner && (
-            <>
-              <button onClick={onDelete}>트윗 삭제</button>
-              <button onClick={toggleUpdate}>트윗 수정</button>
-            </>
+            <div className={styles.tweet_actions}>
+              <span onClick={onDelete}>
+                <FontAwesomeIcon icon={faTrash} />
+              </span>
+              <span onClick={toggleUpdate}>
+                <FontAwesomeIcon icon={faPencilAlt} />
+              </span>
+            </div>
           )}
         </>
       )}

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { authService, dbService } from '../../firebase';
+import React, { useState } from 'react';
+import { authService } from '../../firebase';
 import { useHistory } from 'react-router-dom';
+import styles from './profile.module.css';
 
 function Profile({ userObj, refreshUser }) {
   const [newProfileName, setNewProfileName] = useState(userObj.displayName);
@@ -33,18 +34,21 @@ function Profile({ userObj, refreshUser }) {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className={styles.container}>
+      <form onSubmit={onSubmit} className={styles.Profile_form}>
         <input
           type="text"
           placeholder="프로필 이름 입력"
           onChange={onChange}
           value={newProfileName}
+          className={styles.form_input}
         />
-        <input type="submit" value="프로필 수정" />
+        <input type="submit" value="프로필 수정" className={styles.form_btn} />
       </form>
-      <button onClick={onLogOut}>로그아웃</button>
-    </>
+      <button onClick={onLogOut} className={styles.log_out}>
+        로그아웃
+      </button>
+    </div>
   );
 }
 

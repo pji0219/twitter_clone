@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { authService } from './firebase';
-import Footer from './components/footer/footer';
 import Router from './components/router';
+import LoadingSpinner from './components/loading-spinner/loading-spinner';
+import './app.css';
 
 function App() {
   // firebase 초기화 state
@@ -55,9 +56,8 @@ function App() {
           refreshUser={refreshUser}
         />
       ) : (
-        <h1>initializing...</h1>
+        <LoadingSpinner />
       )}
-      <Footer />
     </>
   );
 }

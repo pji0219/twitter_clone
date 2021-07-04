@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { dbService } from '../../firebase';
 import Tweet from '../tweet/tweet';
 import TweetMaker from '../tweet-maker/tweet-maker';
+import styles from './home.module.css';
 
 function Home({ userObj }) {
   const [tweets, setTweets] = useState([]);
@@ -25,9 +26,9 @@ function Home({ userObj }) {
   }, []);
 
   return (
-    <>
+    <div className={styles.container}>
       <TweetMaker userObj={userObj} />
-      <div>
+      <div className={styles.tweet_container}>
         {tweets.map((tweet) => (
           <Tweet
             key={tweet.id}
@@ -36,7 +37,7 @@ function Home({ userObj }) {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 

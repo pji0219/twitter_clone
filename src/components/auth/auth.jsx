@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
 import { authService, firebaseInstance } from '../../firebase';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTwitter,
+  faGoogle,
+  faGithub,
+} from '@fortawesome/free-brands-svg-icons';
+import styles from './auth.module.css';
 
 function Auth() {
   const [email, setEmail] = useState();
@@ -56,15 +63,23 @@ function Auth() {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className={styles.auth_container}>
+      <FontAwesomeIcon
+        icon={faTwitter}
+        color={'#04AAFF'}
+        sizze="3x"
+        style={{ marginBottom: 30 }}
+      />
+
+      <form onSubmit={onSubmit} className={styles.auth_form_container}>
         <input
           name="email"
           onChange={onChange}
-          type="text"
+          type="email"
           placeholder="이메일"
           required
           value={email || ''}
+          className={styles.auth_input}
         />
         <input
           name="password"
@@ -73,22 +88,35 @@ function Auth() {
           placeholder="비밀번호"
           required
           value={password || ''}
+          className={styles.auth_input}
         />
-        <input type="submit" value={newAccount ? '계정 만들기' : '로그인'} />
-        {error}
+        <input
+          type="submit"
+          className={styles.auth_submit}
+          value={newAccount ? '계정 만들기' : '로그인'}
+        />
+        {error && <span className={styles.auth_error}>{error}</span>}
       </form>
-      <span onClick={onToggleAccount}>
+      <span onClick={onToggleAccount} className={styles.auth_switch}>
         {newAccount ? '로그인' : '계정 만들기'}
       </span>
-      <div>
-        <button name="google" onClick={onSocialLogin}>
-          구글 로그인
+      <div className={styles.login_btns}>
+        <button
+          name="google"
+          onClick={onSocialLogin}
+          className={styles.login_btn}
+        >
+          구글 로그인 <FontAwesomeIcon icon={faGoogle} />
         </button>
-        <button name="github" onClick={onSocialLogin}>
-          깃허브 로그인
+        <button
+          name="github"
+          onClick={onSocialLogin}
+          className={styles.login_btn}
+        >
+          깃허브 로그인 <FontAwesomeIcon icon={faGithub} />
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

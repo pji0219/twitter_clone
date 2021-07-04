@@ -1,0 +1,28 @@
+/* 태블릿 이하 */
+@media all and (max-width: 1024px) {
+  .container {
+    max-width: 320px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tweet_container {
+    margin-top: 30px;
+    max-width: 320px;
+  }
+}
+
+/* 데스크탑 이상 */
+@media all and (min-width: 1025px) {
+  .container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tweet_container {
+    margin-top: 30px;
+    max-width: auto;
+  }
+}

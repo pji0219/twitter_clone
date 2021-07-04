@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { dbService, storageService } from '../../firebase';
 import { v4 as uuidv4 } from 'uuid';
+import styles from './tweet-maker.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 function TweetMaker({ userObj }) {
   const [tweet, setTweet] = useState();
@@ -56,8 +59,10 @@ function TweetMaker({ userObj }) {
     // 파일 읽는 웹 API
     const reader = new FileReader();
 
-    // 이미지 파일명 화면에 표시
-    reader.readAsDataURL(theFile);
+    // 이미지가 올려져 있으면 파일명 화면에 표시
+    if (Boolean(theFile)) {
+      reader.readAsDataURL(theFile);
+    }
 
     // 이미지 로딩 이벤트 끝나고 문자열로 브라우저상에 저장된 이미지 파일 state에 넣음
     reader.onloadend = (finishedEvent) => {
@@ -70,20 +75,43 @@ function TweetMaker({ userObj }) {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className={styles.maker_form}>
+        <div className={styles.maker_input_container}>
+          <input
+            type="text"
+            placeholder="생각을 트윗해 보세요."
+            maxLength={120}
+            value={tweet || ''}
+            onChange={onChange}
+            className={styles.maker_input_tweet}
+          />
+          <input
+            type="submit"
+            value="트윗"
+            className={styles.maker_input_submit}
+          />
+        </div>
+        <label for="img-file" className={styles.maker_input_label}>
+          <span>이미지 추가</span>
+          <FontAwesomeIcon icon={faPlus} />
+        </label>
         <input
-          type="text"
-          placeholder="생각을 트윗해 보세요."
-          maxLength={120}
-          value={tweet || ''}
-          onChange={onChange}
+          id="img-file"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+          className={styles.maker_input_img}
         />
-        <input type="file" accept="image/*" onChange={onFileChange} />
-        <input type="submit" value="트윗하기" />
         {imgFile && (
-          <div>
-            <img src={imgFile} width="100px" height="100px" alt="이미지" />
-            <button onClick={onClearImage}>이미지 지우기</button>
+          <div className={styles.maker_form_img}>
+            <img src={imgFile} alt="이미지" />
+            <div
+              className={styles.maker_form_img_remove}
+              onClick={onClearImage}
+            >
+              <span>이미지 삭제</span>
+              <FontAwesomeIcon icon={faTimes} />
+            </div>
           </div>
         )}
       </form>
