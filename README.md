@@ -28,6 +28,8 @@ https://pji0219.github.io/twitter_clone/<br>
 
 ## (1) 회원가입, 로그인 기능
 
+이메일 회원가입과 로그인 기능, 깃허브 로그인, 구글 로그인 기능을 제공 합니다.<br>
+
 ![로그인](./image/mobile-login.jpg)<br>
 <br>
 
@@ -162,6 +164,8 @@ export default Auth;
 ```
 
 ## (2) 홈페이지의 트윗 CRUD기능
+
+모든 트윗을 조회하고 트윗을 쓰고 수정, 삭제하는 기능을 제공 합니다.<br>
 
 ![홈](./image/mobile-home.jpg)
 ![홈2](./image/mobile-home2.jpg)<br>
@@ -441,6 +445,8 @@ export default TweetMaker;
 ```
 
 ## (3) 프로필 수정 기능
+
+프로필을 수정하고 로그아웃하는 기능을 제공 합니다.<br>
 
 ![프로필](./image/mobile-profile.jpg)<br>
 <br>
