@@ -35,7 +35,7 @@ https://pji0219.github.io/twitter_clone/<br>
 
 ## src > components > auth > auth.jsx
 
-파이어베이스의 인증서비스로 로그인 및 회원가입 기능을 구현, 구글과 깃허브 계정 로그인 기능도 파이어베이스 인증서비스에 연동해서 구현 하였습니다.<br>
+로그인, 회원가입: 구글 파이어베이스 인증(구글, 깃허브 계정 로그인 지원)<br>
 
 ```javascript
 import React, { useState } from 'react';
@@ -173,7 +173,7 @@ export default Auth;
 
 ## src > components > home > home.jsx
 
-DB에 있는 트윗들을 모두 조회해 줍니다.<br>
+DB에 있는 트윗들을 모두 조회.<br>
 
 ```javascript
 import React, { useEffect, useState } from 'react';
@@ -224,7 +224,7 @@ export default Home;
 
 ## components > tweet > tweet.jsx
 
-파이어베이스 파이어스토어 서비스로 db에 있는 트윗을 수정, 삭제 할 수 있게 구현 하였습니다.
+파이어베이스 파이어스토어 서비스 (db에 있는 트윗을 수정, 삭제 할 수 있게 구현)
 
 ```javascript
 import React, { useState } from 'react';
@@ -317,7 +317,7 @@ export default Tweet;
 
 ## src > components > tweet-maker > tweet-maker.jsx
 
-파이어베이스의 파이어 스토어와 스토리지에 트윗과 트윗 이미지를 저장 하도록 구현 하였습니다.
+파이어베이스의 파이어 스토어와 스토리지에 트윗과 트윗 이미지를 저장 하도록 구현
 
 ```javascript
 import React, { useState } from 'react';
@@ -453,7 +453,7 @@ export default TweetMaker;
 
 ## src > components > profile > profile.jsx
 
-파이어베이스의 인증서비스를 통해 프로필 수정과 로그아웃 기능을 구현하였습니다.
+파이어베이스의 인증(프로필 수정과 로그아웃 기능을 구현)
 
 ```javascript
 import React, { useState } from 'react';
